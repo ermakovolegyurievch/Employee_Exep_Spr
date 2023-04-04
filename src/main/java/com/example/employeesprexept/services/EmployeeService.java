@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 public class EmployeeService {
     private final Employee[] employee = new Employee[employeeListSize];
-    private static final int employeeListSize = 5;
+    private static final int employeeListSize = 3;
 
     public Employee add(String firstName, String secondName) {
         Employee temp = new Employee(firstName, secondName);
