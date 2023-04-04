@@ -6,36 +6,35 @@ import com.example.employeesprexept.exeptions.EmployeeStorageIsFullException;
 import com.example.employeesprexept.main.Employee;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 
 public class EmployeeService {
-    private final Employee[] employee = new Employee[employeeListSize];
-    private static final int employeeListSize = 3;
+    List<Employee> employee = new ArrayList<>();
+    private static final int employeeListSize = 10;
 
     public Employee add(String firstName, String secondName) {
         Employee temp = new Employee(firstName, secondName);
-        for (Employee obj : employee) {
-            if (temp.equals(obj)) {
-                throw new EmployeeAlreadyAddedException();
-            }
-        }
-        for (int i = 0; i < employee.length; i++) {
-            if (employee[i] == null) {
-                employee[i] = temp;
-                return temp;
-            }
 
+        if (employee.size() >= employeeListSize) {
+            throw new EmployeeStorageIsFullException();
         }
-        throw new EmployeeStorageIsFullException();
+        if (employee.contains(temp)) {
+            throw new EmployeeAlreadyAddedException();
+        }
+        employee.add(temp);
+        return temp;
     }
+
 
     public Employee remove(String firstName, String secondName) {
         Employee temp = new Employee(firstName, secondName);
-        for (int i = 0; i < employee.length; i++) {
-            if (temp.equals(employee[i])) {
-                employee[i] = null;
-                return temp;
-            }
+        if (employee.contains(temp)) {
+            employee.remove(temp);
+            return temp;
         }
         throw new EmployeeNotFoundException();
     }
@@ -43,11 +42,13 @@ public class EmployeeService {
 
     public Employee find(String firstName, String secondName) {
         Employee temp = new Employee(firstName, secondName);
-        for (Employee obj : employee) {
-            if (temp.equals(obj)) {
-                return temp;
-            }
+        if (employee.contains(temp)) {
+            return temp;
         }
         throw new EmployeeNotFoundException();
+    }
+
+    public List<Employee> list() {
+        return Collections.unmodifiableList(employee);
     }
 }
