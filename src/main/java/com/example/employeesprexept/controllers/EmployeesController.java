@@ -20,7 +20,7 @@ public class EmployeesController {
 
     @GetMapping("/add")
     public Employee add(@RequestParam String firstName, @RequestParam String secondName) {
-        return employeeService.add(employee);
+        return employeeService.add(firstName, secondName);
     }
 
     @GetMapping("/find")
@@ -31,10 +31,5 @@ public class EmployeesController {
     @GetMapping("/remove")
     public Employee remove(@RequestParam String firstName, @RequestParam String secondName) {
         return employeeService.remove(firstName, secondName);
-    }
-
-    @GetMapping("/print")
-    public List<Employee> list() {
-        return employeeService.list();
     }
 }

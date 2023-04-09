@@ -23,12 +23,9 @@ public class EmployeeService {
         employees.remove(getKey(employee));
     }
 
-    public void find(Employee employee) {
+    public Employee find(Employee employee) {
         if (employees.containsKey(getKey(employee))) {
         }
-    }
-
-    private void print() {
-        System.out.println(employees);
+        return employee;
     }
 }
