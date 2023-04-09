@@ -1,0 +1,5 @@
+GET http://localhost:8080/Employee/add?firstName=Asd&secondName=Dsa
+
+GET http://localhost:8080/Employee/add?firstName=Asa&secondName=Asa
+
+GET http://localhost:8080/Employee/add?firstName=Osa&secondName=Osa

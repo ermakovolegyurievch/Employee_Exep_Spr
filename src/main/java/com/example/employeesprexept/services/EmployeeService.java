@@ -1,54 +1,34 @@
 package com.example.employeesprexept.services;
 
-import com.example.employeesprexept.exeptions.EmployeeAlreadyAddedException;
-import com.example.employeesprexept.exeptions.EmployeeNotFoundException;
-import com.example.employeesprexept.exeptions.EmployeeStorageIsFullException;
 import com.example.employeesprexept.main.Employee;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 
 @Service
 
 public class EmployeeService {
-    List<Employee> employee = new ArrayList<>();
-    private static final int employeeListSize = 10;
+    private final Map<String, Employee> employees = new HashMap<>();
 
-    public Employee add(String firstName, String secondName) {
-        Employee temp = new Employee(firstName, secondName);
-
-        if (employee.size() >= employeeListSize) {
-            throw new EmployeeStorageIsFullException();
-        }
-        if (employee.contains(temp)) {
-            throw new EmployeeAlreadyAddedException();
-        }
-        employee.add(temp);
-        return temp;
+    private String getKey(Employee employee) {
+        return employee.getFirstName() + " " + employee.getSecondName();
     }
 
-
-    public Employee remove(String firstName, String secondName) {
-        Employee temp = new Employee(firstName, secondName);
-        if (employee.contains(temp)) {
-            employee.remove(temp);
-            return temp;
-        }
-        throw new EmployeeNotFoundException();
+    public void add(Employee employee) {
+        employees.put(getKey(employee), employee);
     }
 
-
-    public Employee find(String firstName, String secondName) {
-        Employee temp = new Employee(firstName, secondName);
-        if (employee.contains(temp)) {
-            return temp;
-        }
-        throw new EmployeeNotFoundException();
+    public void remove(Employee employee) {
+        employees.remove(getKey(employee));
     }
 
-    public List<Employee> list() {
-        return Collections.unmodifiableList(employee);
+    public void find(Employee employee) {
+        if (employees.containsKey(getKey(employee))) {
+        }
+    }
+
+    private void print() {
+        System.out.println(employees);
     }
 }
